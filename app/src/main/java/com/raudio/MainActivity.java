@@ -21,7 +21,8 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 
 import java.io.IOException;
-import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,39 +58,31 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setIcon( mipmap.ic_launcher )
                 .setTitle( "IP Address" )
                 .setView( editText )
-                .setPositiveButton( "Go",
-                        ( dialog, whichButton ) -> {
+                .setPositiveButton( "Go", ( dialog, whichButton ) -> {
                             String ipNew = editText.getText().toString();
-                            String msg = "";
+                            // validate ip
                             String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
-                            boolean ip4Ok = true;
                             if ( !ipNew.matches( ip4 ) ) {
-                                ip4Ok = false;
-                                msg = "Not valid: "+ ipNew;
+                                dialogError( "Not valid: "+ ipNew );
+                                return;
                             }
-                            boolean ipOk = true;
-                            if ( !ipReachable( ipNew ) ) {
-                                ipOk = false;
-                                msg = "Not reachable: "+ ipNew;
+                            // ip reachable
+                            try {
+                                try ( Socket soc = new Socket() ) {
+                                    soc.connect( new InetSocketAddress( ipNew, 80 ), 2000 );
+                                }
+                            } catch ( IOException ex ) {
+                                dialogError( "Not reachable: "+ ipNew );
+                               return;
                             }
-                            if ( ip4Ok && ipOk ) {
-                                // save data
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString( "ip", ipNew );
-                                editor.apply();
-                                webView.loadUrl( "http://" + ipNew );
-                            } else {
-                                AlertDialog.Builder alertDialog1 = new AlertDialog.Builder( this );
-                                alertDialog1.setIcon( mipmap.ic_launcher )
-                                        .setTitle( "IP Address" )
-                                        .setMessage( msg )
-                                        .setPositiveButton( "Close",
-                                                ( dialog1, which ) -> finish() )
-                                        .show();
-                            }
+                            // save data
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString( "ip", ipNew );
+                            editor.apply();
+                            webView.loadUrl( "http://" + ipNew );
+
                         } )
-                .setNegativeButton( "Cancel",
-                        ( dialog, which ) -> finish() );
+                .setNegativeButton( "Cancel", ( dialog, which ) -> finish() );
         // show keyboard and enter key press - must create() dialog object
         AlertDialog dialog = alertDialog.create();
         dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -104,14 +97,12 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
     }
-    private boolean ipReachable( String ip ) {
-        return true;
-        /*try {
-            return InetAddress.getByName( ip )
-                    .isReachable(5000 );
-        } catch ( IOException e ) {
-            e.printStackTrace();
-            return false;
-        }*/
+    private void  dialogError( String message ) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
+        alertDialog.setIcon( mipmap.ic_launcher )
+                .setTitle( "IP Address" )
+                .setMessage( message )
+                .setPositiveButton( "Close", ( dialog1, which ) -> finish() )
+                .show();
     }
 }
