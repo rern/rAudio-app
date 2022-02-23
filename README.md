@@ -37,3 +37,18 @@ App
 - Set newer version in `rAudio/app/build.gradlee (Module: rAudio.app)`
   - versionCode N
   - versionName "N.0"
+
+### `getIP()`
+```java
+ public String getIP( String hostname ) {
+    String ip = null;
+    try {
+        InetAddress host = InetAddress.getByName( hostname );
+        ip = host.getHostAddress();
+        System.out.println(host.getHostAddress());
+    } catch (UnknownHostException ex) {
+        ex.printStackTrace();
+    }
+    return ip;
+}
+```
