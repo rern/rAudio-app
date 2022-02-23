@@ -26,13 +26,17 @@ import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
-    @SuppressLint( "SetJavaScriptEnabled" )
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         setContentView( layout.activity_main );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        StrictMode.setThreadPolicy( policy );
+        dialogIP();
+    }
+
+    @SuppressLint( "SetJavaScriptEnabled" )
+    private void dialogIP() {
         // setup WebView
         WebView webView = findViewById( id.webView );
         webView.setBackgroundColor( Color.BLACK );
@@ -97,12 +101,14 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
     }
-    private void  dialogError( String message ) {
+
+    private void dialogError( String message ) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
         alertDialog.setIcon( mipmap.ic_launcher )
                 .setTitle( "IP Address" )
                 .setMessage( message )
-                .setPositiveButton( "Close", ( dialog1, which ) -> finish() )
+                .setPositiveButton( "Retry", ( dialog, which ) -> dialogIP() )
+                .setNegativeButton( "Cancel", ( dialog, which ) -> finish() )
                 .show();
     }
 }
