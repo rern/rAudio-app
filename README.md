@@ -38,12 +38,12 @@ App
   - versionCode N
   - versionName "N.0"
 
-### `getIP()`
+### Get IP from URL
 ```java
- public String getIP( String hostname ) {
+ public String getIP( String url ) {
     String ip = null;
     try {
-        InetAddress host = InetAddress.getByName( hostname );
+        InetAddress host = InetAddress.getByName( url );
         ip = host.getHostAddress();
         System.out.println(host.getHostAddress());
     } catch (UnknownHostException ex) {
