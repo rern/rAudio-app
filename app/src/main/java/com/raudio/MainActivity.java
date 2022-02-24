@@ -76,20 +76,13 @@ public class MainActivity extends AppCompatActivity {
                 .setView( layout )
                 .setPositiveButton( "Go", ( dialog, whichButton ) -> {
                             String ipNew = editText.getText().toString();
-                            // validate ip
-                            String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
-                            if ( !ipNew.matches( ip4 ) ) {
+                            if ( notValidIP( ipNew ) ) {
                                 dialogError( "Not valid: "+ ipNew );
                                 return;
                             }
-                            // ip reachable
-                            try {
-                                try ( Socket soc = new Socket() ) {
-                                    soc.connect( new InetSocketAddress( ipNew, 80 ), 2000 );
-                                }
-                            } catch ( IOException ex ) {
+                            if ( notFoundIP( ipNew ) ) {
                                 dialogError( "Not found: "+ ipNew );
-                               return;
+                                return;
                             }
                             // save data
                             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -101,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() );
         // show keyboard and enter key press - must create() dialog object
         AlertDialog dialog = alertDialog.create();
-        dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
+        if ( notValidIP( ipSaved ) ) dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         dialog.show();
         // enter key press
         editText.setOnEditorActionListener( ( v, actionId, event ) -> {
@@ -126,6 +119,20 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton( "Retry", ( dialog, which ) -> dialogIP() )
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() )
                 .show();
+    }
 
+    private boolean notFoundIP( String ip ) {
+        try {
+            try ( Socket soc = new Socket() ) {
+                soc.connect( new InetSocketAddress( ip, 80 ), 2000 );
+                return false;
+            }
+        } catch ( IOException ex ) {
+            return true;
+        }
+    }
+    private boolean notValidIP( String ip ) {
+        String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+        return !ip.matches( ip4 );
     }
 }
