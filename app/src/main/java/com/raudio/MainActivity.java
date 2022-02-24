@@ -19,6 +19,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -57,11 +58,20 @@ public class MainActivity extends AppCompatActivity {
         editText.setTextAlignment( WebView.TEXT_ALIGNMENT_CENTER );
         editText.setText( ipSaved );
         editText.requestFocus();
+        // set stroke color
+        editText.setBackgroundResource(R.drawable.edit_text);
+        // input text margin - put EditText inside LinearLayout > set margins of layout
+        LinearLayout layout = new LinearLayout( this );
+        layout.setOrientation( LinearLayout.VERTICAL );
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT );
+        params.setMargins( 70, 50, 70, 0 );
+        layout.addView( editText, params );
         // dialog box
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
         alertDialog.setIcon( mipmap.ic_launcher )
                 .setTitle( "IP Address" )
-                .setView( editText )
+                .setView( layout )
                 .setPositiveButton( "Go", ( dialog, whichButton ) -> {
                             String ipNew = editText.getText().toString();
                             // validate ip
@@ -106,9 +116,10 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
         alertDialog.setIcon( mipmap.ic_launcher )
                 .setTitle( "IP Address" )
-                .setMessage( message )
+                .setMessage( "\n          "+ message )
                 .setPositiveButton( "Retry", ( dialog, which ) -> dialogIP() )
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() )
                 .show();
+
     }
 }
