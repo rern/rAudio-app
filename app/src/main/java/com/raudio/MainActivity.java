@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView( layout.activity_main );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy( policy );
-        dialogIP();
+        dialogIP( false );
     }
 
     @SuppressLint( "SetJavaScriptEnabled" )
-    private void dialogIP() {
+    private void dialogIP( boolean keyboard ) {
         // setup WebView
         WebView webView = findViewById( id.webView );
         webView.setBackgroundColor( Color.BLACK );
@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         editText.setSingleLine();
         editText.setTextAlignment( WebView.TEXT_ALIGNMENT_CENTER );
         editText.setText( ipSaved );
-        editText.requestFocus();
+        boolean showKeyboard = keyboard || !validIP4( ipSaved );
+        if ( showKeyboard ) editText.requestFocus();
         // set stroke color
         editText.setBackgroundResource( R.drawable.edit_text );
         // input text margin - put EditText inside LinearLayout > set margins of layout
@@ -74,13 +75,13 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setIcon( mipmap.ic_launcher )
                 .setTitle( "IP Address" )
                 .setView( layout )
-                .setPositiveButton( "Go", ( dialog, whichButton ) -> {
+                .setPositiveButton( "Ok", ( dialog, whichButton ) -> {
                             String ipNew = editText.getText().toString();
-                            if ( notValidIP( ipNew ) ) {
+                            if ( !validIP4( ipNew ) ) {
                                 dialogError( "Not valid: "+ ipNew );
                                 return;
                             }
-                            if ( notFoundIP( ipNew ) ) {
+                            if ( !reachableIP( ipNew ) ) {
                                 dialogError( "Not found: "+ ipNew );
                                 return;
                             }
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() );
         // show keyboard and enter key press - must create() dialog object
         AlertDialog dialog = alertDialog.create();
-        if ( notValidIP( ipSaved ) ) dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
+        if ( showKeyboard ) dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         dialog.show();
         // enter key press
         editText.setOnEditorActionListener( ( v, actionId, event ) -> {
@@ -116,23 +117,23 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setIcon( mipmap.ic_launcher )
                 .setTitle( "IP Address" )
                 .setMessage( "\n          "+ message )
-                .setPositiveButton( "Retry", ( dialog, which ) -> dialogIP() )
+                .setPositiveButton( "Retry", ( dialog, which ) -> dialogIP( true ) )
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() )
                 .show();
     }
 
-    private boolean notFoundIP( String ip ) {
+    private boolean reachableIP( String ip ) {
         try {
             try ( Socket soc = new Socket() ) {
                 soc.connect( new InetSocketAddress( ip, 80 ), 2000 );
-                return false;
+                return true;
             }
         } catch ( IOException ex ) {
-            return true;
+            return false;
         }
     }
-    private boolean notValidIP( String ip ) {
+    private boolean validIP4( String ip ) {
         String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
-        return !ip.matches( ip4 );
+        return ip.matches( ip4 );
     }
 }
