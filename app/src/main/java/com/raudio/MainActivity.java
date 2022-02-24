@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         editText.setText( ipSaved );
         editText.requestFocus();
         // set stroke color
-        editText.setBackgroundResource(R.drawable.edit_text);
+        editText.setBackgroundResource( R.drawable.edit_text );
         // input text margin - put EditText inside LinearLayout > set margins of layout
         LinearLayout layout = new LinearLayout( this );
         layout.setOrientation( LinearLayout.VERTICAL );
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                                     soc.connect( new InetSocketAddress( ipNew, 80 ), 2000 );
                                 }
                             } catch ( IOException ex ) {
-                                dialogError( "Not reachable: "+ ipNew );
+                                dialogError( "Not found: "+ ipNew );
                                return;
                             }
                             // save data
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() );
         // show keyboard and enter key press - must create() dialog object
         AlertDialog dialog = alertDialog.create();
-        dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         dialog.show();
         // enter key press
         editText.setOnEditorActionListener( ( v, actionId, event ) -> {
@@ -113,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void dialogError( String message ) {
+        // hide keyboard
+        InputMethodManager imm = ( InputMethodManager ) getSystemService( Activity.INPUT_METHOD_SERVICE );
+        imm.toggleSoftInput( InputMethodManager.HIDE_IMPLICIT_ONLY, 0 );
+        // dialog box
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
         alertDialog.setIcon( mipmap.ic_launcher )
                 .setTitle( "IP Address" )
