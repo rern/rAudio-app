@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint( "SetJavaScriptEnabled" )
-    private void dialogIP( boolean keyboard ) {
+    private void dialogIP( boolean keyboard ) { // keyboard - show if no ipSaved or errors
         // setup WebView
         WebView webView = findViewById( id.webView );
         webView.setBackgroundColor( Color.BLACK );
@@ -132,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    @SuppressWarnings( "BooleanMethodIsAlwaysInverted" )
     private boolean validIP4( String ip ) {
         String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
         return ip.matches( ip4 );
