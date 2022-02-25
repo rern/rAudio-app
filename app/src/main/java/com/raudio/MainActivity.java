@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
+        setTheme( style.baseTheme );
         setContentView( layout.activity_main );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy( policy );
@@ -109,14 +110,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void dialogError( String message, String ip ) {
+    private void dialogError( String error, String ip ) {
         // hide keyboard
         InputMethodManager imm = ( InputMethodManager ) getSystemService( Activity.INPUT_METHOD_SERVICE );
         imm.toggleSoftInput( InputMethodManager.HIDE_IMPLICIT_ONLY, 0 );
         // dialog box
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
         alertDialog.setIcon( android.R.drawable.ic_dialog_alert )
-                .setTitle( "IP Address not "+ message )
+                .setTitle( "IP address not "+ error )
                 .setMessage( "\n           "+ ip )
                 .setPositiveButton( "Retry", ( dialog, which ) -> dialogIP( true ) )
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() );
