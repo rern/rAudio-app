@@ -21,6 +21,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.io.IOException;
@@ -72,17 +73,17 @@ public class MainActivity extends AppCompatActivity {
         layout.addView( editText, params );
         // dialog box
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
-        alertDialog.setIcon( mipmap.ic_launcher )
+        alertDialog.setIcon( mipmap.ic_launcher_foreground )
                 .setTitle( "IP Address" )
                 .setView( layout )
                 .setPositiveButton( "Ok", ( dialog, whichButton ) -> {
                             String ipNew = editText.getText().toString();
                             if ( !validIP4( ipNew ) ) {
-                                dialogError( "Not valid: "+ ipNew );
+                                dialogError( "valid:", ipNew );
                                 return;
                             }
                             if ( !reachableIP( ipNew ) ) {
-                                dialogError( "Not found: "+ ipNew );
+                                dialogError( "found:", ipNew );
                                 return;
                             }
                             // save data
@@ -108,18 +109,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void dialogError( String message ) {
+    private void dialogError( String message, String ip ) {
         // hide keyboard
         InputMethodManager imm = ( InputMethodManager ) getSystemService( Activity.INPUT_METHOD_SERVICE );
         imm.toggleSoftInput( InputMethodManager.HIDE_IMPLICIT_ONLY, 0 );
         // dialog box
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
-        alertDialog.setIcon( mipmap.ic_launcher )
-                .setTitle( "IP Address" )
-                .setMessage( "\n          "+ message )
+        alertDialog.setIcon( android.R.drawable.ic_dialog_alert )
+                .setTitle( "IP Address not "+ message )
+                .setMessage( "\n           "+ ip )
                 .setPositiveButton( "Retry", ( dialog, which ) -> dialogIP( true ) )
-                .setNegativeButton( "Cancel", ( dialog, which ) -> finish() )
-                .show();
+                .setNegativeButton( "Cancel", ( dialog, which ) -> finish() );
+        // set icon color - must create() dialog object
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+        ImageView imageView = dialog.findViewById( android.R.id.icon );
+        if ( imageView != null ) imageView.setColorFilter( Color.parseColor( "#bb2828" ), android.graphics.PorterDuff.Mode.SRC_IN );
     }
 
     private boolean reachableIP( String ip ) {
