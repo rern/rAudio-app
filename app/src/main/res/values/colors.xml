@@ -7,8 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="cg">#4A4D4F</color>
-    <color name="cga">#313435</color>
-    <color name="cml">#0088CC</color>
-    <color name="cw">#E6E6E6</color>
+    <color name="cg">#FF4A4D4F</color>
+    <color name="cga">#FF313435</color>
+    <color name="cml">#FF0088CC</color>
+    <color name="cw">#FFE6E6E6</color>
 </resources>

@@ -61,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
         editText.setSingleLine();
         editText.setTextAlignment( WebView.TEXT_ALIGNMENT_CENTER );
         editText.setText( ipSaved );
-        boolean showKeyboard = keyboard || !validIP4( ipSaved );
-        if ( showKeyboard ) editText.requestFocus();
+        editText.requestFocus();
         // set stroke color
         editText.setBackgroundResource( R.drawable.edit_text );
         // input text margin - put EditText inside LinearLayout > set margins of layout
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() );
         // show keyboard and enter key press - must create() dialog object
         AlertDialog dialog = alertDialog.create();
-        if ( showKeyboard ) dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
+        if ( keyboard || !validIP4( ipSaved ) ) dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         dialog.show();
         // enter key press
         editText.setOnEditorActionListener( ( v, actionId, event ) -> {
