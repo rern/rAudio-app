@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         dialogIP( false );
     }
 
+    int gray = Color.parseColor( "#7c8183" );
+    int red = Color.parseColor( "#bb2828" );
+
     @SuppressLint( "SetJavaScriptEnabled" )
     private void dialogIP( boolean keyboard ) { // keyboard - show if no ipSaved or errors
         // setup WebView
@@ -98,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = alertDialog.create();
         if ( keyboard || !validIP4( ipSaved ) ) dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         dialog.show();
+        dialog.getButton( AlertDialog.BUTTON_NEGATIVE ).setTextColor( gray );
         // enter key press
         editText.setOnEditorActionListener( ( v, actionId, event ) -> {
             if ( actionId == EditorInfo.IME_ACTION_DONE ) {
@@ -123,8 +127,9 @@ public class MainActivity extends AppCompatActivity {
         // set icon color - must create() dialog object
         AlertDialog dialog = alertDialog.create();
         dialog.show();
+        dialog.getButton( AlertDialog.BUTTON_NEGATIVE ).setTextColor( gray );
         ImageView imageView = dialog.findViewById( android.R.id.icon );
-        if ( imageView != null ) imageView.setColorFilter( Color.parseColor( "#bb2828" ), android.graphics.PorterDuff.Mode.SRC_IN );
+        if ( imageView != null ) imageView.setColorFilter( red, android.graphics.PorterDuff.Mode.SRC_IN );
     }
 
     private boolean reachableIP( String ip ) {
