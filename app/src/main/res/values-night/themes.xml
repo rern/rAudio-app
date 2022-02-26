@@ -13,12 +13,12 @@
         <item name="android:statusBarColor">@color/black</item>
         <!-- dialog box -->
         <item name="colorBackgroundFloating">@color/cga</item>
-        <item name="android:colorBackgroundFloating">@color/cga</item>
         <item name="android:textColor">@color/cw</item>
         <item name="android:textColorPrimary">@color/cw</item>
     </style>
 
     <style name="splashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/black</item>
         <item name="android:windowBackground">@color/black</item>
     </style>
 </resources>

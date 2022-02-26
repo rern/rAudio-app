@@ -54,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled( true );
         // get saved data
         SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
-        String ipSaved = sharedPreferences.getString( "ip", "192.168.1." );
+        String ipSaved = sharedPreferences.getString( "ip", null );
+        if ( ipSaved == null ) {
+            ipSaved = "192.168.1.";
+            keyboard = true;
+        }
         // setup input text for dialog box
         EditText editText = new EditText( this );
         editText.setImeOptions( EditorInfo.IME_ACTION_DONE ); // for enter key
@@ -81,11 +85,17 @@ public class MainActivity extends AppCompatActivity {
                 .setView( layout )
                 .setPositiveButton( "Ok", ( dialog, whichButton ) -> {
                             String ipNew = editText.getText().toString();
-                            if ( !validIP4( ipNew ) ) {
+                            // ip valid
+                            String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+                            if ( !ipNew.matches( ip4 ) ) {
                                 dialogError( "valid:", ipNew );
                                 return;
                             }
-                            if ( !reachableIP( ipNew ) ) {
+                            // ip reachable
+                            try {
+                                Socket soc = new Socket();
+                                soc.connect( new InetSocketAddress( ipNew, 80 ), 2000 );
+                            } catch ( IOException ex ) {
                                 dialogError( "found:", ipNew );
                                 return;
                             }
@@ -94,12 +104,11 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString( "ip", ipNew );
                             editor.apply();
                             webView.loadUrl( "http://" + ipNew );
-
                         } )
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() );
         // show keyboard and enter key press - must create() dialog object
         AlertDialog dialog = alertDialog.create();
-        if ( keyboard || !validIP4( ipSaved ) ) dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
+        if ( keyboard ) dialog.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         dialog.show();
         dialog.getButton( AlertDialog.BUTTON_NEGATIVE ).setTextColor( gray );
         // enter key press
@@ -130,22 +139,5 @@ public class MainActivity extends AppCompatActivity {
         dialog.getButton( AlertDialog.BUTTON_NEGATIVE ).setTextColor( gray );
         ImageView imageView = dialog.findViewById( android.R.id.icon );
         if ( imageView != null ) imageView.setColorFilter( red, android.graphics.PorterDuff.Mode.SRC_IN );
-    }
-
-    private boolean reachableIP( String ip ) {
-        try {
-            try ( Socket soc = new Socket() ) {
-                soc.connect( new InetSocketAddress( ip, 80 ), 2000 );
-                return true;
-            }
-        } catch ( IOException ex ) {
-            return false;
-        }
-    }
-
-    @SuppressWarnings( "BooleanMethodIsAlwaysInverted" )
-    private boolean validIP4( String ip ) {
-        String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
-        return ip.matches( ip4 );
     }
 }
