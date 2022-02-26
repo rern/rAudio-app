@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
         dialogIP( false );
     }
 
-    int gray = Color.parseColor( "#7c8183" );
-    int red = Color.parseColor( "#bb2828" );
+    // color for dialog box
+    int gray = Color.parseColor( "#7c8183" ); // cancel button
+    int red = Color.parseColor( "#bb2828" );  // warning icon
 
     @SuppressLint( "SetJavaScriptEnabled" )
     private void dialogIP( boolean keyboard ) { // keyboard - show if no ipSaved or errors
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         layout.setOrientation( LinearLayout.VERTICAL );
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT );
-        params.setMargins( 70, 50, 70, 0 );
+        params.setMargins( 220, 50, 220, 0 );
         layout.addView( editText, params );
         // dialog box
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
