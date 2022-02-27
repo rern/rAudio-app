@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">rAudio</string>
+    <string name="go">Go</string>
+    <string name="logo">Logo</string>
 </resources>
