@@ -6,7 +6,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,14 +14,11 @@ import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -49,12 +45,13 @@ public class MainActivity extends AppCompatActivity {
         editText.setKeyListener( DigitsKeyListener.getInstance( "0123456789." ) );
         editText.setText( ipSaved );
         editText.requestFocus();
-        // show keyboard
-        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
+        // force show keyboard - needs requestFocus()
+        if ( ipSaved.equals( "192.168.1." ) ) getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
         // button
         Button button= findViewById( id.button );
         button.setOnClickListener( v -> {
             String ipNew = editText.getText().toString();
+            // validate
             String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
             if ( !ipNew.matches( ip4 ) ) { // ip valid
                 dialogError( "valid:", ipNew );
@@ -82,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
             // load
             webView.loadUrl( "http://" + ipNew );
         } );
+        // enter key
         editText.setOnEditorActionListener( ( v, actionId, event ) -> {
             if ( actionId == EditorInfo.IME_ACTION_DONE ) {
-                // trigger setPositiveButton()
                 button.performClick();
                 return true;
             }
@@ -93,16 +90,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void dialogError( String error, String ip ) {
-        // dialog box
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
-        alertDialog.setIcon( android.R.drawable.ic_dialog_alert )
+        alertDialog.setIcon( mipmap.ic_launcher_foreground )
                 .setTitle( "IP address not "+ error )
                 .setMessage( "\n           "+ ip )
                 .setPositiveButton( "Retry", ( dialog, which ) -> dialog.dismiss() );
-        // set icon color red - must create() dialog object
-        AlertDialog dialog = alertDialog.create();
-        dialog.show();
-        ImageView imageView = dialog.findViewById( android.R.id.icon );
-        if ( imageView != null ) imageView.setColorFilter( Color.parseColor( "#bb2828" ), android.graphics.PorterDuff.Mode.SRC_IN );
+        alertDialog.show();
     }
 }
