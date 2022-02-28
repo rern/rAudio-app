@@ -53,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
             // validate
             String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
             if ( !ipNew.matches( ip4 ) ) { // ip valid
-                dialogError( "valid:", ipNew );
+                dialogError( "valid", ipNew );
                 return;
             }
             try { // ip reachable
                 Socket soc = new Socket();
                 soc.connect( new InetSocketAddress( ipNew, 80 ), 2000 );
             } catch ( IOException ex ) {
-                dialogError( "found:", ipNew );
+                dialogError( "found", ipNew );
                 return;
             }
             // save data
@@ -91,14 +91,10 @@ public class MainActivity extends AppCompatActivity {
     private void dialogError( String error, String ip ) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this, style.dialogTheme );
         alertDialog.setIcon( mipmap.ic_launcher_foreground )
-                .setTitle( "IP address not "+ error )
-                .setMessage( "\n           "+ ip )
+                .setTitle( "IP address not "+ error +":" )
+                .setMessage( ip )
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() )
-                .setPositiveButton( "Retry", ( dialog, which ) -> dialog.dismiss() );
-        AlertDialog dialog = alertDialog.create(); // setTextColor() needs create()
-        dialog.show();
-        // button text color
-        dialog.getButton( AlertDialog.BUTTON_NEGATIVE ).setTextColor( Color.parseColor( "#636769" ) );
-        dialog.getButton( AlertDialog.BUTTON_POSITIVE ).setTextColor( Color.parseColor( "#0088CC" ) );
+                .setPositiveButton( "Retry", ( dialog, which ) -> dialog.dismiss() )
+                .show();
     }
 }

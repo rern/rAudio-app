@@ -13,9 +13,32 @@
         <item name="android:windowBackground">@color/black</item>
         <item name="android:statusBarColor">@color/black</item>
     </style>
-    <style name="dialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+    <!-- dialog box -->
+    <style name="dialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="android:colorBackground">@color/cga</item>
-        <item name="android:textColor">@color/cw</item> <!-- title -->
-        <item name="android:textColorPrimary">@color/cw</item> <!-- content -->
+        <item name="colorSurface">@color/cga</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/title</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/body</item>
+        <item name="buttonBarNegativeButtonStyle">@style/negativeButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/positiveButton</item>
+        <item name="android:backgroundDimAmount">0.9</item>
+    </style>
+    <style name="title" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/cw</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="body" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">@color/cw</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="negativeButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/cgl</item>
+        <item name="rippleColor">@color/cg</item> <!-- pressed -->
+    </style>
+    <style name="positiveButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/cml</item>
+        <item name="rippleColor">@color/cm</item>
     </style>
 </resources>
