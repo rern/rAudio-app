@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         } );
+        // recent list
     }
 
     private void dialogError( String error, String ip ) {
@@ -94,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle( "IP address not "+ error )
                 .setMessage( "\n           "+ ip )
                 .setPositiveButton( "Retry", ( dialog, which ) -> dialog.dismiss() );
-        alertDialog.show();
+        AlertDialog dialog = alertDialog.create(); // setTextColor() needs create()
+        dialog.show();
+        // button text color
+        dialog.getButton( AlertDialog.BUTTON_POSITIVE ).setTextColor( Color.parseColor( "#0088CC" ) );
     }
 }
