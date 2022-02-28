@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="baseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item> <!-- button text -->
+        <item name="colorPrimary">@color/cga</item> <!-- recent list title bar -->
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
@@ -15,6 +15,6 @@
         <!-- dialog box -->
         <item name="colorBackgroundFloating">@color/cga</item>
         <item name="android:textColor">@color/cw</item> <!-- title -->
-        <item name="android:textColorPrimary">@color/cw</item> <!-- input -->
+        <item name="android:textColorPrimary">@color/cw</item> <!-- content -->
     </style>
 </resources>

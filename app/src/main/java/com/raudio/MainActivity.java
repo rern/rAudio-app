@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         } );
-        // recent list
     }
 
     private void dialogError( String error, String ip ) {
