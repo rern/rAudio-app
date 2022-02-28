@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     private void dialogError( String error, String ip ) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this, style.dialogTheme );
         alertDialog.setIcon( mipmap.ic_launcher_foreground )
-                .setTitle( "IP address not "+ error +":" )
+                .setTitle( "IP address not "+ error +" !" )
                 .setMessage( ip )
                 .setNegativeButton( "Cancel", ( dialog, which ) -> finish() )
                 .setPositiveButton( "Retry", ( dialog, which ) -> dialog.dismiss() )

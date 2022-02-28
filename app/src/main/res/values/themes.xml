@@ -17,18 +17,23 @@
     <style name="dialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="android:colorBackground">@color/cga</item>
         <item name="colorSurface">@color/cga</item>
+        <item name="materialAlertDialogTitlePanelStyle">@style/titlePanel</item>
         <item name="materialAlertDialogTitleTextStyle">@style/title</item>
         <item name="materialAlertDialogBodyTextStyle">@style/body</item>
         <item name="buttonBarNegativeButtonStyle">@style/negativeButton</item>
         <item name="buttonBarPositiveButtonStyle">@style/positiveButton</item>
         <item name="android:backgroundDimAmount">0.9</item>
     </style>
+    <style name="titlePanel" parent="MaterialAlertDialog.MaterialComponents.Title.Panel">
+        <item name="android:background">@color/cgd</item>
+        <item name="android:padding">10dp</item>
+    </style>
     <style name="title" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
         <item name="android:textColor">@color/cw</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
     </style>
     <style name="body" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:padding">20dp</item>
         <item name="android:textColor">@color/cw</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textAlignment">center</item>
