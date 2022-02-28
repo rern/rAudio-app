@@ -9,16 +9,12 @@
         <item name="colorSecondary">@color/cml</item>
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
+        <!-- custom -->
+        <item name="android:windowBackground">@color/black</item>
         <item name="android:statusBarColor">@color/black</item>
         <!-- dialog box -->
         <item name="colorBackgroundFloating">@color/cga</item>
-        <item name="android:textColor">@color/cw</item>
-        <item name="android:textColorPrimary">@color/cw</item>
-    </style>
-
-    <style name="splashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@color/black</item>
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:textColor">@color/cw</item> <!-- title -->
+        <item name="android:textColorPrimary">@color/cw</item> <!-- input -->
     </style>
 </resources>

@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy( policy );
-        setTheme( style.baseTheme );
         setContentView( layout.activity_startup );
         // get saved data
         SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
