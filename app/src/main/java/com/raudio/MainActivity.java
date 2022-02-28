@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             // load
             webView.loadUrl( "http://" + ipNew );
         } );
-        // enter key
+        // keyboard enter key
         editText.setOnEditorActionListener( ( v, actionId, event ) -> {
             if ( actionId == EditorInfo.IME_ACTION_DONE ) {
                 button.performClick();
@@ -89,14 +89,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void dialogError( String error, String ip ) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder( this, style.dialogTheme );
         alertDialog.setIcon( mipmap.ic_launcher_foreground )
                 .setTitle( "IP address not "+ error )
                 .setMessage( "\n           "+ ip )
+                .setNegativeButton( "Cancel", ( dialog, which ) -> finish() )
                 .setPositiveButton( "Retry", ( dialog, which ) -> dialog.dismiss() );
         AlertDialog dialog = alertDialog.create(); // setTextColor() needs create()
         dialog.show();
         // button text color
+        dialog.getButton( AlertDialog.BUTTON_NEGATIVE ).setTextColor( Color.parseColor( "#636769" ) );
         dialog.getButton( AlertDialog.BUTTON_POSITIVE ).setTextColor( Color.parseColor( "#0088CC" ) );
     }
 }

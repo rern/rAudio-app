@@ -12,8 +12,9 @@
         <!-- custom -->
         <item name="android:windowBackground">@color/black</item>
         <item name="android:statusBarColor">@color/black</item>
-        <!-- dialog box -->
-        <item name="colorBackgroundFloating">@color/cga</item>
+    </style>
+    <style name="dialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:colorBackground">@color/cga</item>
         <item name="android:textColor">@color/cw</item> <!-- title -->
         <item name="android:textColorPrimary">@color/cw</item> <!-- content -->
     </style>
