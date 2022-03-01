@@ -40,8 +40,9 @@
         <item name="android:textAlignment">center</item>
     </style>
     <style name="buttonBar">
-        <item name="android:paddingRight">140dp</item>
+        <!--<item name="android:paddingRight">140dp</item>-->
         <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingRight">15dp</item>
     </style>
     <style name="positiveButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:backgroundTint">@color/cm</item>
