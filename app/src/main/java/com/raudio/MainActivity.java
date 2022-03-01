@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setIcon( mipmap.ic_launcher_foreground )
                 .setTitle( "IP address not "+ error +" !" )
                 .setMessage( ip )
-                .setNegativeButton( "Cancel", ( dialog, which ) -> finish() )
                 .setPositiveButton( "Retry", ( dialog, which ) -> dialog.dismiss() )
                 .show();
     }
