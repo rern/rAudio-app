@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.WebSettings;
@@ -98,13 +97,13 @@ public class MainActivity extends AppCompatActivity {
             Dialog dialog = new Dialog( activity );
             dialog.setContentView( layout.dialog );
 
-            TextView titleText = ( TextView ) dialog.findViewById( id.titleText );
+            TextView titleText = dialog.findViewById( id.titleText );
             String msg = "IP address not "+ error +" !";
             titleText.setText( msg );
-            TextView bodyText = ( TextView ) dialog.findViewById( id.bodyText );
+            TextView bodyText = dialog.findViewById( id.bodyText );
             bodyText.setText( ip );
 
-            Button button = ( Button ) dialog.findViewById( id.button );
+            Button button = dialog.findViewById( id.button );
             button.setOnClickListener( v -> dialog.dismiss() );
             dialog.show();
         }
