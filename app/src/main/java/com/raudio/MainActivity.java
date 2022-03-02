@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         } );
     }
 
-    public void errorDialog( String error, String ipNew ){
+    public void errorDialog( String error, String ipNew ) {
         Dialog dialog = new Dialog( this );
         dialog.setContentView( layout.dialog );
 
