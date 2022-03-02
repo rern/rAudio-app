@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy( policy );
+        // setup page style
         setContentView( layout.activity_startup );
         // get saved data
         SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         editText.setText( ipSaved );
         editText.requestFocus();
         // force show keyboard - needs requestFocus()
-        if ( ipSaved.equals( "192.168.1." ) ) getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE );
+        if ( ipSaved.equals( "192.168.1." ) ) showKeyboard();
         // button
         Button button= findViewById( id.button );
         button.setOnClickListener( v -> {
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString( "ip", ipNew );
             editor.apply();
-            // setup WebView
+            // setup page style to WebView
             setContentView( layout.activity_main );
             WebView webView = findViewById( id.webView );
             webView.setBackgroundColor( Color.BLACK );
@@ -91,16 +92,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void errorDialog( String error, String ipNew ) {
         Dialog dialog = new Dialog( this );
+        // setup dialog style
         dialog.setContentView( layout.dialog );
-
+        // set text
         TextView titleText = dialog.findViewById( id.titleText );
         String msg = "IP address not "+ error +" !";
         titleText.setText( msg );
         TextView bodyText = dialog.findViewById( id.bodyText );
         bodyText.setText( ipNew );
-
+        // setup button click
         Button button = dialog.findViewById( id.button );
-        button.setOnClickListener( v -> dialog.dismiss() );
+        button.setOnClickListener( v -> {
+            dialog.dismiss();
+            showKeyboard();
+        } );
+
         dialog.show();
+    }
+
+    public void showKeyboard() {
+        this.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE );
     }
 }
