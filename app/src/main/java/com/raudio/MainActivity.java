@@ -5,7 +5,6 @@ import static com.raudio.R.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -55,16 +54,14 @@ public class MainActivity extends AppCompatActivity {
             // validate
             String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
             if ( !ipNew.matches( ip4 ) ) { // ip valid
-                CustomDialog customDialog = new CustomDialog();
-                customDialog.showDialog( this, "valid", ipNew );
+                errorDialog( "valid", ipNew );
                 return;
             }
             try { // ip reachable
                 Socket soc = new Socket();
                 soc.connect( new InetSocketAddress( ipNew, 80 ), 2000 );
             } catch ( IOException ex ) {
-                CustomDialog customDialog = new CustomDialog();
-                customDialog.showDialog( this, "found", ipNew );
+                errorDialog( "found", ipNew );
                 return;
             }
             // save data
@@ -92,20 +89,18 @@ public class MainActivity extends AppCompatActivity {
         } );
     }
 
-    public static class CustomDialog {
-        public void showDialog( Activity activity, String error, String ip ){
-            Dialog dialog = new Dialog( activity );
-            dialog.setContentView( layout.dialog );
+    public void errorDialog( String error, String ipNew ){
+        Dialog dialog = new Dialog( this );
+        dialog.setContentView( layout.dialog );
 
-            TextView titleText = dialog.findViewById( id.titleText );
-            String msg = "IP address not "+ error +" !";
-            titleText.setText( msg );
-            TextView bodyText = dialog.findViewById( id.bodyText );
-            bodyText.setText( ip );
+        TextView titleText = dialog.findViewById( id.titleText );
+        String msg = "IP address not "+ error +" !";
+        titleText.setText( msg );
+        TextView bodyText = dialog.findViewById( id.bodyText );
+        bodyText.setText( ipNew );
 
-            Button button = dialog.findViewById( id.button );
-            button.setOnClickListener( v -> dialog.dismiss() );
-            dialog.show();
-        }
+        Button button = dialog.findViewById( id.button );
+        button.setOnClickListener( v -> dialog.dismiss() );
+        dialog.show();
     }
 }
