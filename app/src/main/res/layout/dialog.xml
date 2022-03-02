@@ -67,13 +67,12 @@
 
         <Button
             android:id="@+id/button"
-            android:layout_width="60dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="@color/cm"
             android:letterSpacing="0"
-            android:padding="5dp"
             android:text='@string/retry'
             android:textAllCaps="false"
             android:textColor="@color/cw"

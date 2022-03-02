@@ -60,10 +60,11 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/cm"
+        android:letterSpacing="0"
         android:minWidth="70dp"
         android:text="@string/go"
         android:textAllCaps="false"

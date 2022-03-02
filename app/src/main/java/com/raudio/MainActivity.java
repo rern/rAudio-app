@@ -95,18 +95,16 @@ public class MainActivity extends AppCompatActivity {
 
     public static class CustomDialog {
         public void showDialog( Activity activity, String error, String ip ){
-            final Dialog dialog = new Dialog( activity );
-            dialog.requestWindowFeature( Window.FEATURE_NO_TITLE );
-            dialog.setCancelable( false );
-            dialog.setContentView( R.layout.dialog );
+            Dialog dialog = new Dialog( activity );
+            dialog.setContentView( layout.dialog );
 
-            TextView titleText = ( TextView ) dialog.findViewById( R.id.titleText );
+            TextView titleText = ( TextView ) dialog.findViewById( id.titleText );
             String msg = "IP address not "+ error +" !";
             titleText.setText( msg );
-            TextView bodyText = ( TextView ) dialog.findViewById( R.id.bodyText );
+            TextView bodyText = ( TextView ) dialog.findViewById( id.bodyText );
             bodyText.setText( ip );
 
-            Button button = ( Button ) dialog.findViewById( R.id.button );
+            Button button = ( Button ) dialog.findViewById( id.button );
             button.setOnClickListener( v -> dialog.dismiss() );
             dialog.show();
         }
