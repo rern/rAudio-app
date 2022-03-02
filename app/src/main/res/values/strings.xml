@@ -3,4 +3,5 @@
     <string name="go">Go</string>
     <string name="ipAdress">IP address</string>
     <string name="logo">Logo</string>
+    <string name="retry">Retry</string>
 </resources>

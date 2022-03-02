@@ -2,16 +2,18 @@ package com.raudio;
 
 import static com.raudio.R.*;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.WebSettings;
@@ -19,6 +21,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -53,14 +56,16 @@ public class MainActivity extends AppCompatActivity {
             // validate
             String ip4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
             if ( !ipNew.matches( ip4 ) ) { // ip valid
-                dialogError( "valid", ipNew );
+                CustomDialog customDialog = new CustomDialog();
+                customDialog.showDialog( this, "valid", ipNew );
                 return;
             }
             try { // ip reachable
                 Socket soc = new Socket();
                 soc.connect( new InetSocketAddress( ipNew, 80 ), 2000 );
             } catch ( IOException ex ) {
-                dialogError( "found", ipNew );
+                CustomDialog customDialog = new CustomDialog();
+                customDialog.showDialog( this, "found", ipNew );
                 return;
             }
             // save data
@@ -88,12 +93,22 @@ public class MainActivity extends AppCompatActivity {
         } );
     }
 
-    private void dialogError( String error, String ip ) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder( this, style.dialogTheme );
-        alertDialog.setIcon( mipmap.ic_launcher_foreground )
-                .setTitle( "IP address not "+ error +" !" )
-                .setMessage( ip )
-                .setPositiveButton( "Retry", ( dialog, which ) -> dialog.dismiss() )
-                .show();
+    public static class CustomDialog {
+        public void showDialog( Activity activity, String error, String ip ){
+            final Dialog dialog = new Dialog( activity );
+            dialog.requestWindowFeature( Window.FEATURE_NO_TITLE );
+            dialog.setCancelable( false );
+            dialog.setContentView( R.layout.dialog );
+
+            TextView titleText = ( TextView ) dialog.findViewById( R.id.titleText );
+            String msg = "IP address not "+ error +" !";
+            titleText.setText( msg );
+            TextView bodyText = ( TextView ) dialog.findViewById( R.id.bodyText );
+            bodyText.setText( ip );
+
+            Button button = ( Button ) dialog.findViewById( R.id.button );
+            button.setOnClickListener( v -> dialog.dismiss() );
+            dialog.show();
+        }
     }
 }
