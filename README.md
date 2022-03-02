@@ -5,7 +5,9 @@ App
 - Device Manager > Virtual > Create device
 - File > Settings
 - Appearance > Use custom font: Inconsolata, Size: 14
-- Editor > Font: Inconsolata, Size: 14
+- Editor
+  - Font: Inconsolata, Size: 14
+  - Code style: Line separator: Unix and MacOS
 - Select Hardware > Phone > Pixel 2
 - System Image > Release Name > S (x86_64) > Download
 
