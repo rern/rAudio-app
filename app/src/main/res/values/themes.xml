@@ -13,42 +13,4 @@
         <item name="android:windowBackground">@color/black</item>
         <item name="android:statusBarColor">@color/black</item>
     </style>
-    <!-- dialog box -->
-    <style name="dialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="android:colorBackground">@color/cga</item>
-        <item name="colorSurface">@color/cga</item>
-        <item name="dialogCornerRadius">5dp</item>
-        <item name="materialAlertDialogTitlePanelStyle">@style/titlePanel</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/title</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/body</item>
-        <item name="buttonBarStyle">@style/buttonBar</item>
-        <item name="buttonBarPositiveButtonStyle">@style/positiveButton</item>
-        <item name="android:backgroundDimAmount">0.9</item>
-    </style>
-    <style name="titlePanel" parent="MaterialAlertDialog.MaterialComponents.Title.Panel">
-        <item name="android:background">@color/cgd</item>
-        <item name="android:padding">5dp</item>
-    </style>
-    <style name="title" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
-        <item name="android:textColor">@color/cw</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-    <style name="body" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
-        <item name="android:padding">20dp</item>
-        <item name="android:textColor">@color/cw</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-    <style name="buttonBar">
-        <!--<item name="android:paddingRight">140dp</item>-->
-        <item name="android:paddingBottom">15dp</item>
-        <item name="android:paddingRight">15dp</item>
-    </style>
-    <style name="positiveButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:backgroundTint">@color/cm</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/cw</item>
-        <item name="android:textSize">16sp</item>
-        <item name="rippleColor">@color/cgl</item>
-    </style>
 </resources>
