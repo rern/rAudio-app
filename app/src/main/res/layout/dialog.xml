@@ -6,7 +6,7 @@
     android:background="@color/black">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
+        android:id="@+id/dialogContainer"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_box"
@@ -18,7 +18,7 @@
         app:layout_constraintVertical_bias="0.5">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/dialogTitle"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/dialog_title"
@@ -61,11 +61,11 @@
             android:gravity="center_horizontal"
             android:text="@string/body"
             android:textColor="@color/cw"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/dialogTitle" />
 
         <View
             android:layout_width="70dp"
