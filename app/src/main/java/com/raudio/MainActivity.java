@@ -43,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
         editText.setText( ipSaved );
         // keyboard format
         editText.setImeOptions( EditorInfo.IME_ACTION_DONE ); // for enter key
-        editText.setInputType( InputType.TYPE_CLASS_NUMBER );
-        editText.setInputType( InputType.TYPE_NUMBER_FLAG_DECIMAL );
-        editText.setKeyListener( DigitsKeyListener.getInstance( "0123456789." ) );
+        editText.setKeyListener( DigitsKeyListener.getInstance( "0123456789." ) ); // allow multiple dots
         editText.requestFocus(); // needed by showKeyboard()
         if ( ipSaved.equals( "192.168.1." ) ) showKeyboard();
         // button tap
