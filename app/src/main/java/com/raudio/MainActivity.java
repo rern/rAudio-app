@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
