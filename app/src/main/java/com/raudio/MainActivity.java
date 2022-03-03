@@ -33,22 +33,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy( policy );
-        // setup page style
+        // set page layout
         setContentView( layout.startup );
         // get saved data
         SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
         String ipSaved = sharedPreferences.getString( "ip", "192.168.1." );
         // input text
         EditText editText = findViewById( id.editText );
+        editText.setText( ipSaved );
+        // keyboard format
         editText.setImeOptions( EditorInfo.IME_ACTION_DONE ); // for enter key
         editText.setInputType( InputType.TYPE_CLASS_NUMBER );
         editText.setInputType( InputType.TYPE_NUMBER_FLAG_DECIMAL );
         editText.setKeyListener( DigitsKeyListener.getInstance( "0123456789." ) );
-        editText.setText( ipSaved );
-        editText.requestFocus();
-        // force show keyboard - needs requestFocus()
+        editText.requestFocus(); // needed by showKeyboard()
         if ( ipSaved.equals( "192.168.1." ) ) showKeyboard();
-        // button
+        // button tap
         Button button= findViewById( id.button );
         button.setOnClickListener( v -> {
             String ipNew = editText.getText().toString();
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString( "ip", ipNew );
             editor.apply();
-            // setup page style to WebView
+            // set page layout to WebView
             setContentView( layout.activity_main );
             WebView webView = findViewById( id.webView );
             webView.setBackgroundColor( Color.BLACK );
@@ -92,15 +92,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void errorDialog( String error, String ipNew ) {
         Dialog dialog = new Dialog( this );
-        // setup dialog style
+        // set dialog layout
         dialog.setContentView( layout.dialog );
-        // set text
+        // title and body text
         TextView titleText = dialog.findViewById( id.titleText );
-        String msg = "IP address not "+ error +" !";
-        titleText.setText( msg );
+        String title = "IP address not "+ error +" !";
+        titleText.setText( title );
         TextView bodyText = dialog.findViewById( id.bodyText );
         bodyText.setText( ipNew );
-        // setup button click
+        // button tap
         Button button = dialog.findViewById( id.button );
         button.setOnClickListener( v -> {
             dialog.dismiss();
