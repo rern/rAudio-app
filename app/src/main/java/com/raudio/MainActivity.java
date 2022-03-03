@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy( policy );
         // setup page style
-        setContentView( layout.activity_startup );
+        setContentView( layout.startup );
         // get saved data
         SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
         String ipSaved = sharedPreferences.getString( "ip", "192.168.1." );

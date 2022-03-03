@@ -44,9 +44,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:width="140dp"
+        android:width="160dp"
         android:autofillHints="IP address"
-        android:background="@drawable/edit_text"
+        android:background="@android:color/transparent"
         android:gravity="center"
         android:hint="@string/ipAddress"
         android:inputType="number"
@@ -59,6 +59,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:ignore="LabelFor,TextContrastCheck" />
+
+    <View
+        android:layout_width="160dp"
+        android:layout_height="1dp"
+        android:background="@color/cg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     <Button
         android:id="@+id/button"
