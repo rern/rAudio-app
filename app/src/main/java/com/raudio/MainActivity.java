@@ -13,6 +13,8 @@ import android.os.StrictMode;
 import android.text.method.DigitsKeyListener;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,17 +28,20 @@ import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy( policy );
-        // set page layout
-        setContentView( layout.startup );
         // get saved data
         SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
         String ipSaved = sharedPreferences.getString( "ip", "192.168.1." );
+        if ( !ipSaved.equals( "192.168.1." ) && ipReachable( ipSaved ) ) {
+            loadPage( ipSaved );
+            return;
+        }
+        // set page layout
+        setContentView( layout.startup );
         // input text
         EditText editText = findViewById( id.editText );
         editText.setText( ipSaved );
@@ -55,10 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 errorDialog( "valid", ipNew );
                 return;
             }
-            try { // ip reachable
-                Socket soc = new Socket();
-                soc.connect( new InetSocketAddress( ipNew, 80 ), 2000 );
-            } catch ( IOException ex ) {
+            if ( !ipReachable( ipNew ) ) {
                 errorDialog( "found", ipNew );
                 return;
             }
@@ -66,16 +68,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString( "ip", ipNew );
             editor.apply();
-            // set page layout to WebView
-            setContentView( layout.activity_main );
-            WebView webView = findViewById( id.webView );
-            webView.setBackgroundColor( Color.BLACK );
-            webView.setWebViewClient( new WebViewClient() );
-            // enable javascript
-            WebSettings webSettings = webView.getSettings();
-            webSettings.setJavaScriptEnabled( true );
-            // load
-            webView.loadUrl( "http://" + ipNew );
+            loadPage( ipNew );
         } );
         // keyboard enter key
         editText.setOnEditorActionListener( ( v, actionId, event ) -> {
@@ -105,6 +98,41 @@ public class MainActivity extends AppCompatActivity {
         } );
 
         dialog.show();
+    }
+
+    public boolean ipReachable( String ip ) {
+        try {
+            Socket soc = new Socket();
+            soc.connect( new InetSocketAddress( ip, 80 ), 2000 );
+            return true;
+        } catch ( IOException ex ) {
+            return false;
+        }
+    }
+
+    public class JsToJavaInterface { // call from js by object name JsToJava
+        @JavascriptInterface
+        public void clearData() { // js: if ( typeof JsToJava === 'object' ) JsToJava.clearData();
+            SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
+            sharedPreferences.edit().remove( "ip" ).apply();
+        }
+    }
+
+    @SuppressLint( "SetJavaScriptEnabled" )
+    public void loadPage( String ip ) {
+        // set page layout to WebView
+        setContentView( layout.activity_main );
+        WebView webView = findViewById( id.webView );
+        webView.setBackgroundColor( Color.BLACK );
+        webView.setWebViewClient( new WebViewClient() );
+        // enable javascript
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled( true );
+        // javascript to java
+        webView.setWebChromeClient( new WebChromeClient() );
+        webView.addJavascriptInterface( new JsToJavaInterface(), "JsToJava" ); // object name for js
+        // load
+        webView.loadUrl( "http://" + ip );
     }
 
     public void showKeyboard() {
