@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                                                                    .permitAll()
+                                                                    .build();
         StrictMode.setThreadPolicy( policy );
         // get saved data
         SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             loadPage( ipSaved );
             return;
         }
-        // set page layout
+        // set page style
         setContentView( layout.startup );
         // input text
         EditText editText = findViewById( id.editText );
@@ -65,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             // save data
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString( "ip", ipNew );
-            editor.apply();
+            sharedPreferences.edit()
+                             .putString( "ip", ipNew )
+                             .apply();
             loadPage( ipNew );
         } );
         // keyboard enter key
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void errorDialog( String error, String ipNew ) {
         Dialog dialog = new Dialog( this );
-        // set dialog layout
+        // set dialog style
         dialog.setContentView( layout.dialog );
         // title and body text
         TextView titleText = dialog.findViewById( id.titleText );
@@ -110,11 +112,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class JsToJavaInterface { // call from js by object name JsToJava
+    public class JsToAndroid { // call from js: NAME.FUNCTION()
         @JavascriptInterface
-        public void clearData() { // js: if ( typeof JsToJava === 'object' ) JsToJava.clearData();
+        public void changeIP( String ip ) {
             SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
-            sharedPreferences.edit().remove( "ip" ).apply();
+            if ( ip == null ) {
+                sharedPreferences.edit()
+                                 .remove( "ip" )
+                                 .apply();
+            } else {
+                sharedPreferences.edit()
+                                 .putString( "ip", ip )
+                                 .apply();
+            }
         }
     }
 
@@ -128,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
         // enable javascript
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled( true );
-        // javascript to java
+        // javascript to android
         webView.setWebChromeClient( new WebChromeClient() );
-        webView.addJavascriptInterface( new JsToJavaInterface(), "JsToJava" ); // object name for js
+        webView.addJavascriptInterface( new JsToAndroid(), "Android" ); // name for js NAME.FUNCTION()
         // load
         webView.loadUrl( "http://" + ip );
     }
