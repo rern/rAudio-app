@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
         String ipSaved = sharedPreferences.getString( "ip", "192.168.1." );
         if ( !ipSaved.equals( "192.168.1." ) && ipReachable( ipSaved ) ) {
+            //sharedPreferences.edit().remove( "ip" ).apply(); // clear data
             loadPage( ipSaved );
             return;
         }
@@ -114,17 +115,14 @@ public class MainActivity extends AppCompatActivity {
 
     public class JsToAndroid { // call from js: NAME.FUNCTION()
         @JavascriptInterface
-        public void changeIP( String ip ) {
+        public boolean changeIP( String ip ) {
+            if ( !ipReachable( ip ) ) return false;
+
             SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
-            if ( ip == null ) {
-                sharedPreferences.edit()
-                                 .remove( "ip" )
-                                 .apply();
-            } else {
-                sharedPreferences.edit()
-                                 .putString( "ip", ip )
-                                 .apply();
-            }
+            sharedPreferences.edit()
+                             .putString( "ip", ip )
+                             .apply();
+            return true;
         }
     }
 
