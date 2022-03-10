@@ -28,12 +28,28 @@ App
 - Delete all existing `*.wepp`s
 
 ### Install file
-- Build > Generate Signed Bubled / APK > APK
-- Key store path > Create new > ... > Remember passwords
-- Destination folder > release
-
-### Upload
-- Google Play Console
 - Set newer version in `rAudio/app/build.gradlee (Module: rAudio.app)`
   - versionCode N
   - versionName "N.0"
+- Build > Generate Signed Bubled / APK
+	- Android App Bundle: for upload
+	- APK: for sideload
+- Signing key
+	- New app:
+		- Create new > ... > Remember passwords
+		- Important! - Must be backup/kept the same for app signing for every version
+			- Key store: file + password
+			- Key: alias + password
+	- Upgrade version:
+		- Existing (or upload will be rejected)
+			- Key store: file + password
+			- Key: alias + password
+
+### Upload
+- Google Play Console
+- New app:
+	- Optional - Testing > `Create new release` > Upload
+	- Production > `Create new release` > Upload
+	- Wait for review and approval by Google
+- Upgrade version:
+	- Production > `Create new release` > Upload
