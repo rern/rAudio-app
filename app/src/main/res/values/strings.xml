@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">rAudio</string>
+    <string name="go">Go</string>
+    <string name="ipAddress">IP address</string>
+    <string name="logo">Logo</string>
+    <string name="retry">Retry</string>
+    <string name="title">Title text</string>
+    <string name="body">Body text</string>
 </resources>
