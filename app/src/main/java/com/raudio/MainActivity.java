@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy( policy );
         // get saved data
         SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
+        //sharedPreferences.edit().remove( "ip" ).apply(); // clear data
         String ipSaved = sharedPreferences.getString( "ip", "192.168.1." );
         if ( !ipSaved.equals( "192.168.1." ) && ipReachable( ipSaved ) ) {
-            //sharedPreferences.edit().remove( "ip" ).apply(); // clear data
             loadPage( ipSaved );
             return;
         }
