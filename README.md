@@ -30,11 +30,13 @@ App
 - Delete all existing `*.wepp`s
 
 ### Install file
-- Build > Generate Signed Bubled / APK > APK
+- Build > Generate Signed Bundle / APK
+    - Android App Bundle for Google Play Console
+    - APK for sideloading install
 - Key store path > Create new > ... > Remember passwords
 - Destination folder > release
 
-### Upload
+### Upload `*.AAB`
 - Google Play Console
 - Set newer version in `rAudio/app/build.gradlee (Module: rAudio.app)`
   - versionCode N
