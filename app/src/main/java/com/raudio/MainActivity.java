@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.method.DigitsKeyListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.JavascriptInterface;
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
                                                                     .permitAll()
                                                                     .build();
         StrictMode.setThreadPolicy( policy );
+        // hide top status bar
+        requestWindowFeature( Window.FEATURE_NO_TITLE );
+        this.getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
         // get saved data
         SharedPreferences sharedPreferences = getSharedPreferences( "com.raudio_preferences", MODE_PRIVATE );
         //sharedPreferences.edit().remove( "ip" ).apply(); // clear data
