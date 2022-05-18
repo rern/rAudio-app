@@ -31,13 +31,13 @@ App
 
 ### Install file
 - Build > Generate Signed Bundle / APK
-    - Android App Bundle for Google Play Console
-    - APK for sideloading install
+    - Android App Bundle
+    - APK
 - Key store path > Create new > ... > Remember passwords
 - Destination folder > release
 
 ### Upload `*.AAB`
-- Google Play Console
+- [Google Play Console](https://play.google.com/console/about/)
 - Set newer version in `rAudio/app/build.gradlee (Module: rAudio.app)`
   - versionCode N
   - versionName "N.0"
