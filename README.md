@@ -37,12 +37,15 @@ App
 - Destination folder > release
 
 ### Upload `*.AAB`
-- [Google Play Console](https://play.google.com/console/about/)
 - Set newer version in `rAudio/app/build.gradle (Module: rAudio.app)`
   - versionCode N
   - versionName "N.0"
+- [Google Play Console](https://play.google.com/console/about/)
+  - Production > Edit release > App bundles > Upload > Release notes > `Save`
+  - `Review release` > `Start rollout to production`
 
-### Get IP from URL
+### Tips
+- Get IP from URL
 ```java
  public String getIP( String url ) {
     String ip = null;
