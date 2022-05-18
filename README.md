@@ -39,10 +39,10 @@ App
 ### Upload `*.AAB`
 - Set newer version in `rAudio/app/build.gradle (Module: rAudio.app)`
   - versionCode N
-  - versionName "N.0"
+  - versionName "yyymmdd"
 - [Google Play Console](https://play.google.com/console/about/)
-  - Production > Edit release > App bundles > Upload > Release notes > `Save`
-  - `Review release` > `Start rollout to production`
+  - Production > Edit release > App bundles > Upload `app-release.aab` > Release notes - add > Save
+  - Review release > Start rollout to production
 
 ### Tips
 - Get IP from URL
