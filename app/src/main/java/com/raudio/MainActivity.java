@@ -105,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean ipReachable( String ip ) {
         try {
-            Socket soc = new Socket();
+            Socket soc;
+            soc = new Socket();
             soc.connect( new InetSocketAddress( ip, 80 ), 2000 );
             return true;
         } catch ( IOException ex ) {
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class JsToAndroid { // call from js: NAME.FUNCTION()
+    public class JsToAndroid { // call from js: Android.FUNCTION()
         @JavascriptInterface
         public boolean changeIP( String ip ) {
             if ( !ipReachable( ip ) ) return false;
