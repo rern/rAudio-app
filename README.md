@@ -30,16 +30,16 @@ App
 - Delete all existing `*.wepp`s
 
 ### Install file
+- Set newer version in `rAudio/app/build.gradle (Module: rAudio.app)`
+  - versionCode N
+  - versionName "yyymmdd"
 - Build > Generate Signed Bundle / APK...
-    - Android App Bundle
-    - APK
+  - Android App Bundle (for upload)
+  - APK                (for local install)
 - Key store path > Create new > ... > Remember passwords
 - Destination folder > release
 
 ### Upload `*.AAB`
-- Set newer version in `rAudio/app/build.gradle (Module: rAudio.app)`
-  - versionCode N
-  - versionName "yyymmdd"
 - [Google Play Console](https://play.google.com/console/about/)
   - Production > Edit release > App bundles > Upload `app-release.aab` > Release notes - add > Save
   - Review release > Start rollout to production
