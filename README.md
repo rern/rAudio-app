@@ -40,7 +40,8 @@ App
 - Destination folder > release
 
 ### Upload `*.aab`
-- [Google Play Console](https://play.google.com/console/about/)
+- [Google Play](https://play.google.com/console/about/) > `Go to Play Console`
+  - Select App
   - Production > Edit release > App bundles > Upload `app-release.aab` > Release notes - add > Save
   - Review release > Start rollout to production
 
