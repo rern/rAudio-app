@@ -39,7 +39,7 @@ App
 - Key store path > Create new > ... > Remember passwords
 - Destination folder > release
 
-### Upload `*.AAB`
+### Upload `*.aab`
 - [Google Play Console](https://play.google.com/console/about/)
   - Production > Edit release > App bundles > Upload `app-release.aab` > Release notes - add > Save
   - Review release > Start rollout to production
