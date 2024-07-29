@@ -42,8 +42,8 @@ App
 ### Upload `*.aab`
 - [Google Play](https://play.google.com/console/about/) > `Go to Play Console`
   - Select App
-  - Production > Edit release > App bundles > Upload `app-release.aab` > Release notes - add > Save
-  - Review release > Start rollout to production
+  - Production > Create new release > App bundles > Upload `app-release.aab` > Release notes - add > Save
+  - Review release > Send to review / Start rollout to production
 
 ### Tips
 - Get IP from URL
